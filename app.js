@@ -10,11 +10,13 @@ let config = require("./config");
 
 // SETENV ==========================================================================================
 process.env.HTTP_PORT = parseInt(process.env.HTTP_PORT || config.HTTP_PORT) || 3000;
+process.env.SMTP_SERVER = process.env.SMTP_SERVER || config.SMTP_SERVER;
 process.env.SMTP_USERNAME = process.env.SMTP_USERNAME || config.SMTP_USERNAME;
 process.env.SMTP_PASSWORD = process.env.SMTP_PASSWORD || config.SMTP_PASSWORD;
 process.env.SMTP_PORT = parseInt(process.env.SMTP_PORT || config.SMTP_PORT) || 25;
-process.env.MAIL_ROBOT = process.env.MAIL_ROBOT || config.MAIL_ROBOT;
-process.env.MAIL_SUPPORT = process.env.MAIL_SUPPORT || config.MAIL_SUPPORT;
+process.env.SMTP_SSL = process.env.SMTP_SSL || config.SMTP_SSL || false;
+process.env.MAIL_ROBOT = process.env.MAIL_ROBOT || config.MAIL_ROBOT || "robot@localhost";
+process.env.MAIL_SUPPORT = process.env.MAIL_SUPPORT || config.MAIL_SUPPORT || "support@localhost";
 
 // LOGGING =========================================================================================
 let customColors = {trace: "white", debug: "blue", info: "green", warn: "yellow", error: "red"};
@@ -51,17 +53,13 @@ let logger = new (winston.Logger)({
       port: process.env.SMTP_PORT,
       username: process.env.SMTP_USERNAME,
       password: process.env.SMTP_PASSWORD,
+      ssl: process.env.SMTP_SSL,
       from: process.env.MAIL_ROBOT,
       to: process.env.MAIL_SUPPORT,
       subject: "Application Failed",
-      ssl: true,
     }),
   ],
 });
-
-MAIL_SERVER = 'smtp.yandex.ru'
-MAIL_PASSWORD = '7rDjr3fr'
-MAIL_USE_SSL = True
 
 function onError(error) {
   if (error.syscall !== "listen") {
@@ -122,4 +120,4 @@ app.use("/", router);
 let server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
-server.listen(process.env.PORT);
+server.listen(process.env.HTTP_PORT);
