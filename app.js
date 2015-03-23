@@ -10,7 +10,7 @@ let config = require("./config");
 
 // SETENV ==========================================================================================
 process.env.HTTP_PORT = parseInt(process.env.HTTP_PORT || config.HTTP_PORT) || 3000;
-process.env.SMTP_SERVER = process.env.SMTP_SERVER || config.SMTP_SERVER;
+process.env.SMTP_HOST = process.env.SMTP_HOST || config.SMTP_HOST;
 process.env.SMTP_USERNAME = process.env.SMTP_USERNAME || config.SMTP_USERNAME;
 process.env.SMTP_PASSWORD = process.env.SMTP_PASSWORD || config.SMTP_PASSWORD;
 process.env.SMTP_PORT = parseInt(process.env.SMTP_PORT || config.SMTP_PORT) || 25;
@@ -49,7 +49,7 @@ let logger = new (winston.Logger)({
     }),
     new winston.transports.Mail({
       level: "error",
-      host: process.env.SMTP_SERVER,
+      host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       username: process.env.SMTP_USERNAME,
       password: process.env.SMTP_PASSWORD,
