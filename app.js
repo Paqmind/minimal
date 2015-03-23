@@ -49,7 +49,7 @@ let logger = new (winston.Logger)({
     }),
     new winston.transports.Mail({
       level: "error",
-      host: "localhost",
+      host: process.env.SMTP_SERVER,
       port: process.env.SMTP_PORT,
       username: process.env.SMTP_USERNAME,
       password: process.env.SMTP_PASSWORD,
