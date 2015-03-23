@@ -1,17 +1,20 @@
-// SETENV ==========================================================================================
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
-process.env.PORT = parseInt(process.env.PORT) || 3000;
-process.env.SMTP_PORT = parseInt(process.env.SMTP_PORT) || 25;
-
 // IMPORTS =========================================================================================
 let path = require("path");
 let http = require("http");
 let util = require("util");
 let winston = require("winston");
 let winstonMail = require("winston-mail");
-
 let Express = require("express");
 let Moment = require("moment");
+let config = require("./config");
+
+// SETENV ==========================================================================================
+process.env.HTTP_PORT = parseInt(process.env.HTTP_PORT || config.HTTP_PORT) || 3000;
+process.env.SMTP_USERNAME = process.env.SMTP_USERNAME || config.SMTP_USERNAME;
+process.env.SMTP_PASSWORD = process.env.SMTP_PASSWORD || config.SMTP_PASSWORD;
+process.env.SMTP_PORT = parseInt(process.env.SMTP_PORT || config.SMTP_PORT) || 25;
+process.env.MAIL_ROBOT = process.env.MAIL_ROBOT || config.MAIL_ROBOT;
+process.env.MAIL_SUPPORT = process.env.MAIL_SUPPORT || config.MAIL_SUPPORT;
 
 // LOGGING =========================================================================================
 let customColors = {trace: "white", debug: "blue", info: "green", warn: "yellow", error: "red"};
@@ -46,12 +49,19 @@ let logger = new (winston.Logger)({
       level: "error",
       host: "localhost",
       port: process.env.SMTP_PORT,
-      from: "robot@paqmind.com",
-      to: "support@paqmind.com",
+      username: process.env.SMTP_USERNAME,
+      password: process.env.SMTP_PASSWORD,
+      from: process.env.MAIL_ROBOT,
+      to: process.env.MAIL_SUPPORT,
       subject: "Application Failed",
+      ssl: true,
     }),
   ],
 });
+
+MAIL_SERVER = 'smtp.yandex.ru'
+MAIL_PASSWORD = '7rDjr3fr'
+MAIL_USE_SSL = True
 
 function onError(error) {
   if (error.syscall !== "listen") {
@@ -59,11 +69,11 @@ function onError(error) {
   }
   switch (error.code) {
     case "EACCES":
-      logger.error(process.env.PORT + " requires elevated privileges");
+      logger.error(process.env.HTTP_PORT + " requires elevated privileges");
       process.exit(1);
       break;
     case "EADDRINUSE":
-      logger.error(process.env.PORT + " is already in use");
+      logger.error(process.env.HTTP_PORT + " is already in use");
       process.exit(1);
       break;
     default:
@@ -72,7 +82,7 @@ function onError(error) {
 }
 
 function onListening() {
-  logger.info("Listening on port " + process.env.PORT);
+  logger.info("Listening on port " + process.env.HTTP_PORT);
 }
 
 // ROUTES ==========================================================================================
