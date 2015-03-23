@@ -101,11 +101,11 @@ function onError(error) {
   }
   switch (error.code) {
     case "EACCES":
-      logger.error(port + " requires elevated privileges");
+      logger.error(process.env.PORT + " requires elevated privileges");
       process.exit(1);
       break;
     case "EADDRINUSE":
-      logger.error(port + " is already in use");
+      logger.error(process.env.PORT + " is already in use");
       process.exit(1);
       break;
     default:
