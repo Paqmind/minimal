@@ -7,17 +7,20 @@ $ HTTP_PORT=3030 npm start
 ```
 
 ```javascript
-// config.js example
-// HTTP
-module.exports.HTTP_PORT = 3030;
+// ./config.js example
+export default {
+  // HTTP
+  HTTP_PORT: 3030,
 
-// SMTP
-module.exports.SMTP_SERVER = "smtp.yandex.ru";
-module.exports.SMTP_USERNAME = "xxx@yyy.com";
-module.exports.SMTP_PASSWORD = "xxx";
-module.exports.SMTP_PORT = 465;
+  // SMTP
+  SMTP_HOST: "smtp.yandex.ru",
+  SMTP_USERNAME: "robot@xxx.com",
+  SMTP_PASSWORD: "xxx",
+  SMTP_PORT: 465,
+  SMTP_SSL: true,
 
-// MAIL
-module.exports.MAIL_ROBOT = "robot@yyy.com";
-module.exports.MAIL_SUPPORT = "support@yyy.com";
+  // MAILS
+  MAIL_ROBOT: "robot@xxx.com",
+  MAIL_SUPPORT: "support@xxx.com",
+};
 ```
