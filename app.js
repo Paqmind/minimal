@@ -30,7 +30,7 @@ router.get("/error", (req, res, next) => {
     port: process.env.SMTP_PORT,
     user: process.env.SMTP_USERNAME,
     password: process.env.SMTP_PASSWORD,
-    ssl: process.env.ssl
+    ssl: process.env.SMTP_SSL,
   });
 
   server.send({
