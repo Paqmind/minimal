@@ -11,21 +11,21 @@ process.env.MAIL_ROBOT = process.env.MAIL_ROBOT || config.MAIL_ROBOT || "robot@l
 process.env.MAIL_SUPPORT = process.env.MAIL_SUPPORT || config.MAIL_SUPPORT || "support@localhost";
 
 // IMPORTS =========================================================================================
-let path = require("path");
-let os = require("os");
-let http = require("http");
-let emailjs = require("emailjs");
+let Path = require("path");
+let Os = require("os");
+let Http = require("http");
+let Emailjs = require("emailjs");
 let Express = require("express");
 
 // ROUTES ==========================================================================================
 let router = Express.Router();
 
 router.get("/", (req, res, next) => {
-  return res.status(200).sendFile(path.join(__dirname, "templates", "home.html"));
+  return res.status(200).sendFile(Path.join(__dirname, "templates", "home.html"));
 });
 
 router.get("/error", (req, res, next) => {
-  var server  = emailjs.server.connect({
+  var server  = Emailjs.server.connect({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
     user: process.env.SMTP_USERNAME,
@@ -37,7 +37,7 @@ router.get("/error", (req, res, next) => {
    text: "I hope this works",
    from: process.env.MAIL_ROBOT,
    to: process.env.MAIL_SUPPORT,
-   subject: `Mail test | ${os.hostname()}`,
+   subject: `Mail test | ${Os.hostname()}`,
   }, function(err, message) { console.log(err || message); });
   throw Error("Demo error");
 });
@@ -49,12 +49,12 @@ router.get("/api", (req, res, next) => {
 });
 
 router.use(function(req, res, next) {
-  return res.status(404).sendFile(path.join(__dirname, "templates", "404.html"));
+  return res.status(404).sendFile(Path.join(__dirname, "templates", "404.html"));
 });
 
 router.use(function(err, req, res, next) {
   console.log(err.stack);
-  return res.status(err.status || 500).sendFile(path.join(__dirname, "templates", "500.html"));
+  return res.status(err.status || 500).sendFile(Path.join(__dirname, "templates", "500.html"));
 });
 
 // APP =============================================================================================
@@ -63,7 +63,7 @@ let app = Express();
 app.use("/", router);
 
 // SERVER ==========================================================================================
-let server = http.createServer(app);
+let server = Http.createServer(app);
 
 server.on("error", onError);
 server.on("listening", onListening);
