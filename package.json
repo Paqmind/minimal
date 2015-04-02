@@ -1,9 +1,9 @@
 {
-  "name": "minimal",
-  "main": "backend/app/app.js",
-  "version": "0.1.0",
+  "name": "paqmind.minimal",
+  "main": "app.js",
+  "version": "0.1.2",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon -e js,html --exec babel-node app.js --experimental"
+    "start": "$(npm bin)/nodemon -e html --exec babel-node app.js --experimental"
   },
   "dependencies": {
     "emailjs": "^0.3.13",
