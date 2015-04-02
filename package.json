@@ -3,10 +3,10 @@
   "main": "app.js",
   "version": "0.1.2",
   "scripts": {
-    "start": "$(npm bin)/nodemon -e html --exec babel-node app.js --experimental",
-    "release-patch": "git checkout master && git commit -am 'Distribute' && npm version patch && git push origin master --tags",
-    "release-minor": "git checkout master && git commit -am 'Distribute' && npm version minor && git push origin master --tags",
-    "release-major": "git checkout master && git commit -am 'Distribute' && npm version major && git push origin master --tags"
+    "start": "nodemon -e html --exec babel-node app.js --experimental",
+    "release-patch": "npm version patch && git push origin master --tags",
+    "release-minor": "npm version minor && git push origin master --tags",
+    "release-major": "npm version major && git push origin master --tags"
   },
   "dependencies": {
     "emailjs": "^0.3.13",
