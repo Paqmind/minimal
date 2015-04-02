@@ -1,7 +1,7 @@
 {
   "name": "paqmind.minimal",
   "main": "app.js",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "scripts": {
     "start": "nodemon -e html --exec babel-node app.js --experimental",
     "release-patch": "npm version patch && git push origin master --tags",
